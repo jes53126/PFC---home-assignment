@@ -1,0 +1,61 @@
+@model IReadOnlyList<MenuCloudApp.Services.MenuSearchResult>
+@{
+    ViewData["Title"] = "Catalog";
+    var query = ViewData["Query"]?.ToString() ?? "";
+    var sort = ViewData["Sort"]?.ToString() ?? "asc";
+}
+
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Searchable menu catalog</p>
+        <h1>Find dishes and compare prices</h1>
+    </div>
+    <a class="btn btn-primary" asp-controller="Upload" asp-action="Index">Upload menu</a>
+</section>
+
+<form class="toolbar" method="get">
+    <input class="form-control" type="search" name="q" value="@query" placeholder="Search Pasta, Burger, Steak..." />
+    <select class="form-select" name="sort">
+        <option value="asc" selected="@(sort == "asc")">Lowest price first</option>
+        <option value="desc" selected="@(sort == "desc")">Highest price first</option>
+    </select>
+    <button class="btn btn-dark" type="submit">Search</button>
+</form>
+
+<div class="result-list">
+    @if (!Model.Any())
+    {
+        <p class="empty-state">No completed menu items found yet.</p>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <article class="result-row">
+                <div>
+                    <strong>@item.ItemName</strong>
+                    <span>@item.RestaurantName</span>
+                </div>
+                <div class="price">@item.Currency @item.Price.ToString("0.00")</div>
+                <form class="translate-form">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="menuId" value="@item.MenuId" />
+                    <input type="hidden" name="itemName" value="@item.ItemName" />
+                    <select class="form-select form-select-sm" name="language">
+                        <option value="en">English</option>
+                        <option value="mt">Maltese</option>
+                        <option value="it">Italian</option>
+                        <option value="fr">French</option>
+                        <option value="es">Spanish</option>
+                    </select>
+                    <button class="btn btn-outline-secondary btn-sm" type="submit">Translate</button>
+                </form>
+                <output class="translation"></output>
+            </article>
+        }
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/catalog.js" asp-append-version="true"></script>
+}

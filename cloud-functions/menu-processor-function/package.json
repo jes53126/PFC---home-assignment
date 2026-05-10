@@ -1,0 +1,13 @@
+{
+  "name": "menu-processor-function",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@google-cloud/firestore": "^7.11.0",
+    "@google-cloud/functions-framework": "^3.5.1",
+    "@google-cloud/vision": "^4.3.3"
+  },
+  "scripts": {
+    "start": "functions-framework --target=processMenuUpload --signature-type=cloudevent"
+  }
+}

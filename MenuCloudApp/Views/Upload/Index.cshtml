@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Upload";
+}
+
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Menu intake</p>
+        <h1>Upload restaurant menu images</h1>
+    </div>
+</section>
+
+<form id="uploadForm" class="tool-panel">
+    @Html.AntiForgeryToken()
+    <label class="form-label" for="restaurantName">Restaurant name</label>
+    <input class="form-control" id="restaurantName" name="restaurantName" placeholder="Example: Emma's Bistro" required />
+
+    <label class="form-label mt-3" for="files">Menu images</label>
+    <input class="form-control" id="files" name="files" type="file" accept="image/*,.pdf" multiple required />
+
+    <button class="btn btn-primary mt-4" type="submit">Upload</button>
+</form>
+
+<div id="progressList" class="progress-list"></div>
+
+@section Scripts {
+    <script src="~/js/upload.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,12 @@
+{
+  "name": "translation-function",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@google-cloud/translate": "^8.5.1",
+    "@google-cloud/functions-framework": "^3.5.1"
+  },
+  "scripts": {
+    "start": "functions-framework --target=translateMenuItem"
+  }
+}
